@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-// import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-// import Loader from "./Loader";
-// import UserRow from "./UserRow";
+
 import UserRowHome from "./userRowhome";
 import { selectEmployeesDetail } from "../redux/user/user.selector";
 import { connect } from "react-redux";
@@ -22,30 +20,17 @@ const containerVariants = {
     transition: { ease: "easeInOut" },
   },
 };
-// const buttonVariants = {
-//   hover: {
-//     scale: 1.1,
-//     textShadow: "0px 0px 8px rgb(255,255,255)",
-//     boxShadow: "0px 0px 8px rgb(255,255,255)",
-//     transition: {
-//       duration: 0.3,
-//       yoyo: Infinity
-//     }
-//   }
-// }
+
 
 const Home = ({ allEmployees, getAllEmployees }) => {
-  // const [employees, setEmployees] = useState([])
+
   useEffect(() => {
     const getDetails = async () => {
       await getAllEmployees();
-      // await setEmployees(allEmployees)
     };
     getDetails();
 
-    // return () => {
-    //   cleanup
-    // }
+
   }, [getAllEmployees]);
   return (
     <motion.div

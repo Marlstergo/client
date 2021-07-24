@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-// import Axios from "axios";
+
 import axios from "axios";
 import { getAllEmployees } from "../redux/user/user.action";
 import { connect } from "react-redux";
@@ -144,10 +144,5 @@ const AddUser = ({ getAllEmployees, history }) => {
 const mapDispatchToProps = (dispatch) => ({
   getAllEmployees: () => dispatch(getAllEmployees()),
 });
-// const mapStateToProps = createStructuredSelector({
-//   // contacts: selectCurrentUserContacts
-//   // users: selectCurrentUser
-//   allEmployees: selectEmployeesDetail
-// });
 
 export default withRouter(connect(null, mapDispatchToProps)(AddUser));

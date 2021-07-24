@@ -1,9 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-// import { Link } from "react-router-dom";
+
 import { withRouter } from "react-router-dom";
-
-
 
 const buttonVariants = {
   show: {
@@ -23,7 +21,6 @@ const Header = ({ history }) => {
   console.log(history.location.pathname);
   return (
     <header className="flex p-7 w-full justify-between  items-center">
-      
       <motion.div
         className=" flex justify-between w-full ml-6 text-xs"
         initial={{ y: -250 }}
