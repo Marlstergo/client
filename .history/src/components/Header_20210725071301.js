@@ -31,7 +31,6 @@ const Header = ({ history }) => {
           User Listing UI
         </a>
         <motion.a
-          href="/adduser"
           variants={buttonVariants}
           whileHover="hover"
           animate={`${history.location.pathname === "/adduser" ? "" : "show"}`}

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-
 import axios from "axios";
-import { getAllEmployees } from "../redux/user/user.action";
-import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectEmployeesDetail } from "../redux/user/user.selector";
 import { API_URL } from "../apiLink";
 
 const containerVariants = {
@@ -37,31 +37,38 @@ const childVariants = {
   },
 };
 
-const AddUser = ({ getAllEmployees, history }) => {
+const EditUser = ({ match, history, allEmployees }) => {
+  console.log(allEmployees);
+  const employee = allEmployees.find(
+    (employee) => employee._id === match.params.id
+  );
+  console.log(employee);
+  console.log(match.params.id);
+  console.log(match);
+
+  // console.log(history)
   const [userDetails, setUserDetail] = useState({
-    name: "",
-    email: "",
-    phone: "",
+    name: employee.name,
+    email: employee.email,
+    phone: employee.phone,
   });
   const change = (e) => {
     const { value, name } = e.target;
     setUserDetail({ ...userDetails, [name]: value });
   };
-  
-  const addEmployee = (e) => {
-    e.preventDefault();
+
+  const editEmployee = () => {
     axios({
-      method: "post",
-      url: `${API_URL}/users`,
+      method: "put",
+      url: `${API_URL}/users/${match.params.id}`,
       data: {
         name: userDetails.name,
         email: userDetails.email,
         phone: userDetails.phone,
       },
     })
-      .then((res) => {
-        console.log("am done posting");
-        console.log(res);
+      .then(() => {
+        console.log("am done editing");
         setUserDetail({
           name: "",
           email: "",
@@ -70,10 +77,9 @@ const AddUser = ({ getAllEmployees, history }) => {
       })
       .then(() => {
         history.push("/");
-      })
-      .then(getAllEmployees());
+      });
   };
-
+  console.log(userDetails);
   return (
     <motion.div
       className="container order flex justify-center"
@@ -83,9 +89,8 @@ const AddUser = ({ getAllEmployees, history }) => {
       exit="exit"
     >
       <div className="w-2/3 mb-20">
-        <motion.div variants={childVariants}></motion.div>
         <h1 className="text-gray-600 font-semibold pt-6 mb-4 focus:border-gray-500 focus:outline-none focus:ring-0 text-2xl">
-          Add New User
+          Edit Existing User Detail
         </h1>
 
         <motion.form variants={childVariants} className="pl-4">
@@ -100,6 +105,7 @@ const AddUser = ({ getAllEmployees, history }) => {
               className="px-3 py-4 w-full md:w-2/3 lg:w-1/2 border-2 rounded-lg shadow-md"
               id="name"
               placeholder="name"
+              value={userDetails.name}
             />
           </div>
           <div className="flex flex-col">
@@ -108,11 +114,12 @@ const AddUser = ({ getAllEmployees, history }) => {
             </label>
             <input
               onChange={change}
-              type="email"
+              type="text"
               name="email"
               className="px-3 py-4 w-full md:w-2/3 lg:w-1/2 rounded-lg shadow-md border-2"
               placeholder="email"
               id="email"
+              value={userDetails.email}
             />
           </div>
           <div className="flex flex-col">
@@ -123,26 +130,28 @@ const AddUser = ({ getAllEmployees, history }) => {
               onChange={change}
               type="text"
               name="phone"
-              className="form px-3 py-4 w-full md:w-2/3 lg:w-1/2 rounded-lg shadow-md border-2"
+              className="px-3 py-4 w-full md:w-2/3 lg:w-1/2 rounded-lg shadow-md border-2"
               id="phone"
               placeholder="phone number"
+              value={userDetails.phone}
             />
           </div>
         </motion.form>
         <button
-          onClick={addEmployee}
-          type="submit"
-          className="text-xl z-40 cursor-pointer py-3 active:bg-gray-200 border-2 px-3 rounded-xl mt-6 "
+          onClick={editEmployee}
+          className="text-xl py-3 active:bg-gray-200 border-2 px-3 rounded-xl mt-6 z-40"
         >
-          Add user
+          Update User
         </button>
-        <motion.div variants={childVariants}></motion.div>
       </div>
     </motion.div>
   );
 };
-const mapDispatchToProps = (dispatch) => ({
-  getAllEmployees: () => dispatch(getAllEmployees()),
+
+const mapStateToProps = createStructuredSelector({
+  // contacts: selectCurrentUserContacts
+  // users: selectCurrentUser
+  allEmployees: selectEmployeesDetail,
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(AddUser));
+export default withRouter(connect(mapStateToProps)(EditUser));

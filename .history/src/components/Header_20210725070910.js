@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 import { withRouter } from "react-router-dom";
 
@@ -30,17 +31,18 @@ const Header = ({ history }) => {
         <a href="/" className=" pb-4 text-5xl">
           User Listing UI
         </a>
-        <motion.a
-          href="/adduser"
+        <motion.div
           variants={buttonVariants}
           whileHover="hover"
           animate={`${history.location.pathname === "/adduser" ? "" : "show"}`}
-          className="text-xl border-2 px-3 rounded-2xl active:bg-gray-200 flex items-center cursor-pointer"
         >
-          
+          <Link
+            to="/adduser"
+            className="text-xl border-2 px-3 rounded-2xl active:bg-gray-200 flex items-center"
+          >
             Add User
-          
-        </motion.a>
+          </Link>
+        </motion.div>
       </motion.div>
     </header>
   );

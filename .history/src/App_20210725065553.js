@@ -38,7 +38,7 @@ function App({ getAllEmployees, allEmployees }) {
               <Home />
             </Route>
 
-            <Route path="/edit:id" name="edit">
+            <Route path="/edit:id" name="order">
               <EditUser />
             </Route>
             <Route path="/view" exact name="view">

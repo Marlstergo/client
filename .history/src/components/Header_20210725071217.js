@@ -31,11 +31,11 @@ const Header = ({ history }) => {
           User Listing UI
         </a>
         <motion.a
-          href="/adduser"
           variants={buttonVariants}
           whileHover="hover"
           animate={`${history.location.pathname === "/adduser" ? "" : "show"}`}
           className="text-xl border-2 px-3 rounded-2xl active:bg-gray-200 flex items-center cursor-pointer"
+          onClick={()=>{history.push('/adduser')}}
         >
           
             Add User
