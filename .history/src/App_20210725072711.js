@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home";
@@ -15,8 +15,8 @@ import { getAllEmployees } from "./redux/user/user.action";
 import { selectEmployeesDetail } from "./redux/user/user.selector";
 
 function App({ getAllEmployees, allEmployees }) {
-  const [employees, setEmployees] = useState({});
-  useReducer(() => {
+  const [employees, setEmployees] = useReducer({});
+  useEffect(() => {
     const getDetails = async () => {
       await getAllEmployees();
       await setEmployees(allEmployees);
